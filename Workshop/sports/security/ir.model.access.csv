@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_sports_facility,access_sports_facility,model_sports_facility,base.group_user,1,1,1,1
+access_sports_facility_court,access_sports_facility_court,model_sports_facility_court,base.group_user,1,1,1,1
+access_sports_facility_booking,access_sports_facility_booking,model_sports_facility_booking,base.group_user,1,1,1,1

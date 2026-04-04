@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <menuitem id="sports_menu_root" 
+                  name="Sports" 
+                  web_icon="base,static/description/settings.png" 
+                  sequence="10"/>
+        
+        <menuitem id="sports_first_level_menu" name="Facilities" parent="sports_menu_root" sequence="10"/>
+        <menuitem id="sports_facility_menu_action" name="Facility List" action="sports_facility_action" parent="sports_first_level_menu" sequence="10"/>
+        <menuitem id="sports_facility_court_menu_action" name="Courts" action="sports_facility_court_action" parent="sports_first_level_menu" sequence="20"/>
+
+        <menuitem id="sports_booking_menu_root" name="Reservations" parent="sports_menu_root" sequence="20"/>
+        <menuitem id="sports_facility_booking_menu_action" name="Bookings" action="action_sports_booking" parent="sports_booking_menu_root" sequence="10"/>
+
+        <menuitem id="sports_second_level_menu" name="Settings" parent="sports_menu_root" sequence="100"/>
+    </data>
+</odoo>
