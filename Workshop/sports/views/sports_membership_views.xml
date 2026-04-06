@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_membership_list" model="ir.ui.view">
+        <field name="name">sports.membership.list</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <list string="Membership Plans">
+                <field name="name"/>
+                <field name="discount_percentage"/>
+                <field name="annual_fee"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_form" model="ir.ui.view">
+        <field name="name">sports.membership.form</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <form string="Membership Plan">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Plan Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="discount_percentage"/>
+                        <field name="annual_fee"/>
+                    </group>
+                    <notebook>
+                        <page string="Members">
+                            <field name="member_ids"
+                                   readonly="1"
+                                   no_create="1"
+                                   no_open="1">
+                                <list>
+                                    <field name="name" readonly="1"/>
+                                    <field name="membership_expiry" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership" model="ir.actions.act_window">
+        <field name="name">Membership Plans</field>
+        <field name="res_model">sports.membership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_sports_membership_payment_list" model="ir.ui.view">
+        <field name="name">sports.membership.payment.list</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <list string="Membership Payments"
+                  decoration-success="state == 'active'"
+                  decoration-danger="state == 'expired'">
+                <field name="partner_id"/>
+                <field name="membership_id"/>
+                <field name="payment_date"/>
+                <field name="expiry_date"/>
+                <field name="amount_paid"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="partner_id"
+                                   placeholder="Select Customer"/>
+                                   
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Membership">
+                            <field name="membership_id"
+                                   options="{'no_create': True}"/>
+                            <field name="amount_paid"/>
+                        </group>
+                        <group string="Validity">
+                            <field name="payment_date"/>
+                            <field name="expiry_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership_payment" model="ir.actions.act_window">
+        <field name="name">Membership Payments</field>
+        <field name="res_model">sports.membership.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <odoo>
+
+    <record id="view_sports_membership_list" model="ir.ui.view">
+        <field name="name">sports.membership.list</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <list string="Membership Plans">
+                <field name="name"/>
+                <field name="discount_percentage"/>
+                <field name="annual_fee"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_form" model="ir.ui.view">
+        <field name="name">sports.membership.form</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <form string="Membership Plan">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Plan Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="discount_percentage"/>
+                        <field name="annual_fee"/>
+                    </group>
+                    <notebook>
+                        <page string="Members">
+                            <field name="member_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="email"/>
+                                    <field name="membership_expiry"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership" model="ir.actions.act_window">
+        <field name="name">Membership Plans</field>
+        <field name="res_model">sports.membership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    < Membership Payment>
+    <record id="view_sports_membership_payment_list" model="ir.ui.view">
+        <field name="name">sports.membership.payment.list</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <list string="Membership Payments"
+                  decoration-success="state == 'paid'"
+                  decoration-danger="state == 'expired'"
+                  decoration-warning="state == 'pending'">
+                <field name="partner_id"/>
+                <field name="membership_id"/>
+                <field name="payment_date"/>
+                <field name="expiry_date"/>
+                <field name="amount_paid"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <button name="action_mark_paid" string="Mark as Paid" type="object"
+                            class="oe_highlight" invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,paid,expired"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Member">
+                            <field name="partner_id"/>
+                            <field name="membership_id"/>
+                        </group>
+                        <group string="Payment">
+                            <field name="payment_date"/>
+                            <field name="expiry_date" readonly="1"/>
+                            <field name="amount_paid"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership_payment" model="ir.actions.act_window">
+        <field name="name">Membership Payments</field>
+        <field name="res_model">sports.membership.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo> -->
+
+
+
+
+
+
+
+
+
+<!-- <
+<odoo>
+
+    <record id="view_sports_membership_list" model="ir.ui.view">
+        <field name="name">sports.membership.list</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <list string="Membership Plans">
+                <field name="name"/>
+                <field name="discount_percentage"/>
+                <field name="annual_fee"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_form" model="ir.ui.view">
+        <field name="name">sports.membership.form</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <form string="Membership Plan">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Plan Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="discount_percentage"/>
+                        <field name="annual_fee"/>
+                    </group>
+                    <notebook>
+                        <page string="Members">
+                            <field name="member_ids"
+                                   readonly="1"
+                                   no_create="1"
+                                   no_open="1">
+                                <list>
+                                    <field name="name" readonly="1"/>
+                                    <field name="membership_expiry" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership" model="ir.actions.act_window">
+        <field name="name">Membership Plans</field>
+        <field name="res_model">sports.membership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_sports_membership_payment_list" model="ir.ui.view">
+        <field name="name">sports.membership.payment.list</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <list string="Membership Payments"
+                  decoration-success="state == 'paid'"
+                  decoration-danger="state == 'expired'"
+                  decoration-warning="state == 'pending'">
+                <field name="partner_id"/>
+                <field name="membership_id"/>
+                <field name="payment_date"/>
+                <field name="expiry_date"/>
+                <field name="amount_paid"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <button name="action_mark_paid"
+                            string="Mark as Paid"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,paid,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="partner_id"
+                                   placeholder="Select Customer"
+                                   options="{'no_create': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Membership">
+                            <field name="membership_id"
+                                   options="{'no_create': True}"/>
+                            <field name="amount_paid"/>
+                        </group>
+                        <group string="Validity" invisible="state == 'pending'">
+                            <field name="payment_date" readonly="1"/>
+                            <field name="expiry_date"  readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership_payment" model="ir.actions.act_window">
+        <field name="name">Membership Payments</field>
+        <field name="res_model">sports.membership.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
+ 
+ 
+  -->
+ 
+ 
+ <!-- 
+<odoo>
+
+    <record id="view_sports_membership_list" model="ir.ui.view">
+        <field name="name">sports.membership.list</field>
+        <field name="model">sports.membership</field>
+        <field name="arch" type="xml">
+            <list string="Membership Plans">
+                <field name="name"/>
+                <field name="discount_percentage"/>
+                <field name="annual_fee"/>
+            </list>
+        </field>
+    </record>
+
+<record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <button name="action_mark_paid"
+                            string="Mark as Paid"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="pending,paid,expired"/>
+                </header>
+                    <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="membership_id"/>
+                        </group>
+                        <group string="Payment Details" invisible="state == 'pending'">
+                            <field name="payment_date" readonly="1"/>
+                            <field name="expiry_date"  readonly="1"/>
+                            <field name="amount_paid"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record> -->
+    <!-- <record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <button name="action_mark_paid"
+                            string="Mark as Paid"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="pending,paid,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="partner_id"
+                                placeholder="Select Customer"
+                                options="{'no_create': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Membership">
+                            <field name="membership_id"
+                                options="{'no_create': True}"/>
+                            <field name="amount_paid"/>
+                        </group>
+                        <group string="Validity" invisible="state == 'pending'">
+                            <field name="payment_date" readonly="1"/>
+                            <field name="expiry_date"  readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+        
+
+    <record id="action_sports_membership" model="ir.actions.act_window">
+        <field name="name">Membership Plans</field>
+        <field name="res_model">sports.membership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_sports_membership_payment_list" model="ir.ui.view">
+        <field name="name">sports.membership.payment.list</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <list string="Membership Payments"
+                  decoration-success="state == 'paid'"
+                  decoration-danger="state == 'expired'"
+                  decoration-warning="state == 'pending'">
+                <field name="partner_id"/>
+                <field name="membership_id"/>
+                <field name="payment_date"/>
+                <field name="expiry_date"/>
+                <field name="amount_paid"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_membership_payment_form" model="ir.ui.view">
+        <field name="name">sports.membership.payment.form</field>
+        <field name="model">sports.membership.payment</field>
+        <field name="arch" type="xml">
+            <form string="Membership Payment">
+                <header>
+                    <button name="action_mark_paid"
+                            string="Mark as Paid"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,paid,expired"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="membership_id"/>
+                    </group>
+                    <group string="Payment Details" invisible="state == 'pending'">
+                        <field name="payment_date" readonly="1"/>
+                        <field name="expiry_date"  readonly="1"/>
+                        <field name="amount_paid"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_membership_payment" model="ir.actions.act_window">
+        <field name="name">Membership Payments</field>
+        <field name="res_model">sports.membership.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>  -->
+
+
+

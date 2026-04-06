@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sports_facility_view_list" model="ir.ui.view">
+        <field name="name">sports.facility.list</field>
+        <field name="model">sports.facility</field>
+        <field name="arch" type="xml">
+            <list string="Facilities"
+                  decoration-danger="courts_in_maintenance &gt; 0">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="total_courts"/>
+                <field name="available_courts"/>
+                <field name="courts_in_maintenance"/>
+                <field name="avg_hourly_rate"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sports_facility_view_form" model="ir.ui.view">
+        <field name="name">sports.facility.form</field>
+        <field name="model">sports.facility</field>
+        <field name="arch" type="xml">
+            <form string="Facility">
+                <header>
+                    <button name="suspend_facility"    string="Suspend"    type="object" invisible="state != 'active'"/>
+                    <button name="reactivate_facility" string="Reactivate" type="object" invisible="state == 'active'"/>
+                    <button name="close_facility"      string="Close"      type="object" invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,suspended,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Facility Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="location"/>
+                        </group>
+                        <group string="Court Summary">
+                            <field name="total_courts"          readonly="1"/>
+                            <field name="available_courts"      readonly="1"/>
+                            <field name="courts_in_maintenance" readonly="1"/>
+                            <field name="avg_hourly_rate"       readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Courts">
+                            <field name="court_ids">
+                                <list decoration-success="state == 'available'"
+                                      decoration-danger="state == 'maintenance'">
+                                    <field name="name"/>
+                                    <field name="sport_type_id"/>
+                                    <field name="hourly_rate"/>
+                                    <field name="accumulated_hours"/>
+                                    <field name="maintenance_threshold"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Equipment">
+                            <field name="equipment_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="sport_type_id"/>
+                                    <field name="rental_price"/>
+                                    <field name="stock_quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Lockers">
+                            <field name="locker_ids">
+                                <list editable="bottom"
+                                    decoration-success="state == 'available'"
+                                    decoration-warning="state == 'rented'">
+                                    <field name="name"/>
+                                    <field name="locker_type"/>
+                                    <field name="renter_id"/>
+                                    <field name="expiry_date"/>
+                                    <field name="monthly_fee"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Coaches">
+                            <field name="coach_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="sport_type_id"/>
+                                    <field name="hourly_fee"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sports_facility_action" model="ir.actions.act_window">
+        <field name="name">Facilities</field>
+        <field name="res_model">sports.facility</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

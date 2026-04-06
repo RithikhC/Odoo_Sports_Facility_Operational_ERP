@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="sports_menu_root" name="TOdooSports" sequence="10"/>
+
+    <menuitem id="sports_menu_reservations" name="Reservations" parent="sports_menu_root" sequence="10"/>
+    <menuitem id="sports_menu_booking_list" name="All Reservations" parent="sports_menu_reservations" action="action_sports_booking" sequence="10"/>
+
+    <menuitem id="sports_first_level_menu" name="Facilities" parent="sports_menu_root" sequence="20"/>
+    <menuitem id="sports_facility_menu_action" name="Facility List" parent="sports_first_level_menu" action="sports_facility_action" sequence="10"/>
+    <menuitem id="sports_facility_court_menu_action" name="Courts" parent="sports_first_level_menu" action="sports_facility_court_action" sequence="20"/>
+    <menuitem id="sports_menu_locker_list" name="Lockers" parent="sports_first_level_menu" action="action_sports_locker" sequence="30"/>
+
+    <menuitem id="sports_menu_staff" name="Staff" parent="sports_menu_root" sequence="30"/>
+    <menuitem id="sports_menu_coach_list" name="Coaches" parent="sports_menu_staff" action="action_sports_coach" sequence="10"/>
+
+    <menuitem id="sports_menu_members" name="Memberships" parent="sports_menu_root" sequence="40"/>
+    <menuitem id="sports_menu_membership_plans" name="Plans" parent="sports_menu_members" action="action_sports_membership" sequence="10"/>
+    <menuitem id="sports_menu_membership_payments" name="Payments" parent="sports_menu_members" action="action_sports_membership_payment" sequence="20"/>
+
+    <menuitem id="sports_second_level_menu" name="Configuration" parent="sports_menu_root" sequence="99"/>
+    <menuitem id="sports_menu_sport_type" name="Sport Types" parent="sports_second_level_menu" action="action_sports_type" sequence="10"/>
+    <menuitem id="sports_menu_amenity" name="Amenities" parent="sports_second_level_menu" action="action_sports_amenity" sequence="20"/>
+    <menuitem id="sports_menu_equipment" name="Equipment" parent="sports_second_level_menu" action="action_sports_equipment" sequence="30"/>
+    <menuitem id="sports_menu_pricing_rules" name="Pricing Rules" parent="sports_second_level_menu" action="action_sports_pricing_rule" sequence="40"/>
+
+</odoo>

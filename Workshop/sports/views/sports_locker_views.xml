@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_locker_list" model="ir.ui.view">
+        <field name="name">sports.locker.list</field>
+        <field name="model">sports.locker</field>
+        <field name="arch" type="xml">
+            <list string="Lockers"
+                  decoration-success="state == 'available'"
+                  decoration-warning="state == 'rented'">
+                <field name="name"/>
+                <field name="facility_id"/>
+                <field name="locker_type"/>
+                <field name="renter_id"/>
+                <field name="expiry_date"/>
+                <field name="monthly_fee"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_locker_form" model="ir.ui.view">
+        <field name="name">sports.locker.form</field>
+        <field name="model">sports.locker</field>
+        <field name="arch" type="xml">
+            <form string="Locker">
+                <header>
+                    <button name="action_rent"    string="Mark as Rented"    type="object" class="oe_highlight" invisible="state == 'rented'"/>
+                    <button name="action_release" string="Release Locker"     type="object" invisible="state == 'available'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="available,rented"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Locker Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="locker_type"/>
+                            <field name="monthly_fee"/>
+                        </group>
+                        <group string="Rental Info">
+                            <field name="renter_id"/>
+                            <field name="expiry_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_locker" model="ir.actions.act_window">
+        <field name="name">Lockers</field>
+        <field name="res_model">sports.locker</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

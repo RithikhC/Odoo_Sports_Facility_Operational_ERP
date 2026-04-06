@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_pricing_rule_list" model="ir.ui.view">
+        <field name="name">sports.pricing.rule.list</field>
+        <field name="model">sports.pricing.rule</field>
+        <field name="arch" type="xml">
+            <list string="Pricing Rules">
+                <field name="name"/>
+                <field name="day_of_week"/>
+                <field name="start_hour"/>
+                <field name="end_hour"/>
+                <field name="price_multiplier"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_pricing_rule_form" model="ir.ui.view">
+        <field name="name">sports.pricing.rule.form</field>
+        <field name="model">sports.pricing.rule</field>
+        <field name="arch" type="xml">
+            <form string="Pricing Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Friday Night Surge"/></h1>
+                    </div>
+                    <group string="Pricing">
+                        <group>
+                            <field name="day_of_week"
+                                   help="Which day of the week this rule activates."/>
+                            <field name="start_hour"
+                                   help="Start of the time window in 24hr format. e.g. 18.0 = 6:00 PM, 8.5 = 8:30 AM"/>
+                            <field name="end_hour"
+                                   help="End of the time window in 24hr format. e.g. 23.0 = 11:00 PM"/>
+                        </group>
+                        <group string="">
+                            <field name="price_multiplier"
+                                   help="1.5 = 50% more expensive. 0.8 = 20% cheaper. 1.0 = no change."/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_pricing_rule" model="ir.actions.act_window">
+        <field name="name">Pricing Rules</field>
+        <field name="res_model">sports.pricing.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

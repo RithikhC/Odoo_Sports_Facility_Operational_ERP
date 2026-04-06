@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_booking_list" model="ir.ui.view">
+        <field name="name">sports.facility.booking.list</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <list string="Reservations"
+                  decoration-success="state == 'done'"
+                  decoration-danger="state == 'cancelled'"
+                  decoration-warning="state == 'confirmed'"
+                  decoration-info="state == 'draft'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="sport_type_id"/>
+                <field name="facility_id"/>
+                <field name="court_id"/>
+                <field name="coach_id"/>
+                <field name="start_time"/>
+                <field name="duration"/>
+                <field name="total_price"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_booking_form" model="ir.ui.view">
+        <field name="name">sports.facility.booking.form</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <form string="Reservation">
+                <header>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_done"
+                            string="Mark as Done"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_cancel"
+                            string="Cancel Booking"
+                            type="object"
+                            invisible="state in ['done', 'cancelled']"/>
+                    <button name="action_reset_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state not in ['confirmed']"/>
+                
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,done,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    
+                        <group string="Customer Details">
+                            <field name="partner_id"/>
+                            <field name="membership_id"       readonly="1"/>
+                            <field name="discount_percentage" readonly="1"/>
+                        </group>
+
+                    
+                    
+                        <group>
+                            <group string="Other Details">
+                                <group>
+                                    <field name="sport_type_id"/>
+                                    <field name="facility_id"
+                                        domain="[('court_ids.sport_type_id', '=', sport_type_id),
+                                                    ('state', '=', 'active')]"/>
+                                    <field name="court_id"
+                                        domain="[('facility_id',   '=', facility_id),
+                                                    ('sport_type_id', '=', sport_type_id),
+                                                    ('state',         '=', 'available')]"/>
+                                </group>
+                            </group>
+                            <group string="Schedule">    
+                                <group>
+                                    <field name="start_time"/>
+                                    <field name="duration"/>
+                                    <field name="end_time" readonly="1"/>
+                                </group>
+                            </group>       
+                        </group> 
+                        
+                        
+                    <group>
+                        <group string="Coach Details">
+                            <field name="coach_id"
+                                domain="[('facility_id',   '=', facility_id),
+                                            ('sport_type_id', '=', sport_type_id)]"/>
+                        </group>
+
+                        <group string="Pricing Breakdown">
+                             <group>
+                                <field name="applied_rule"     readonly="1"/>
+                                <field name="court_price"     readonly="1"/>
+                                <field name="coach_cost"      readonly="1"/>
+                                <field name="equipment_cost"  readonly="1"/>
+                                <field name="discount_amount" readonly="1"/>
+                                <field name="total_price"     readonly="1"/>
+                            </group>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Equipment">
+                            <field name="equipment_line_ids">
+                                <list editable="bottom">
+                                    <field name="equipment_id"
+                                           domain="[('facility_id',   '=', parent.facility_id),
+                                                    ('sport_type_id', '=', parent.sport_type_id)]"/>
+                                    <field name="quantity"/>
+                                    <field name="rental_price" readonly="1"/>
+                                    <field name="subtotal"     readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sports_booking_calendar" model="ir.ui.view">
+        <field name="name">sports.facility.booking.calendar</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <calendar string="Reservations Calendar"
+                      date_start="start_time"
+                      date_stop="end_time"
+                      color="sport_type_id"
+                      mode="week">
+                <field name="partner_id"/>
+                <field name="sport_type_id"/>
+                <field name="court_id"/>
+                <field name="coach_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_sports_booking" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">sports.facility.booking</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+
+</odoo>
+
+<!-- 
+<odoo>
+
+    <record id="view_sports_booking_list" model="ir.ui.view">
+        <field name="name">sports.facility.booking.list</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <list string="Reservations">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="court_id"/>
+                <field name="coach_id"/>
+                <field name="start_time"/>
+                <field name="duration"/>
+                <field name="end_time"/>
+                <field name="applied_rule"/>
+                <field name="total_price"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_booking_form" model="ir.ui.view">
+        <field name="name">sports.facility.booking.form</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <form string="Reservation">
+                <header>
+                    <button name="action_confirm"      string="Confirm"        type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_done"         string="Mark as Done"   type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_reset_draft"  string="Reset to Draft" type="object" invisible="state == 'draft'"/>
+                    <button name="action_create_invoice" string="Generate Invoice" type="object" class="oe_highlight" invisible="state not in ['confirmed', 'done']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Booking Details">
+                            <field name="partner_id"/>
+                            <field name="court_id"/>
+                            <field name="coach_id"
+                            domain="[('facility_id', '=', facility_id)]"/>
+                        </group>
+                        <group string="Schedule">
+                            <field name="start_time"/>
+                            <field name="duration"/>
+                            <field name="end_time" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Membership">
+                            <field name="membership_id"       readonly="1"/>
+                            <field name="discount_percentage" readonly="1"/>
+                        </group>
+                        <group string="Pricing Breakdown">
+                            <field name="applied_rule"    readonly="1"/>
+                            <field name="price_multiplier" readonly="1"/>
+                            <field name="court_price"     readonly="1"/>
+                            <field name="coach_cost"      readonly="1"/>
+                            <field name="equipment_cost"  readonly="1"/>
+                            <field name="discount_amount" readonly="1"/>
+                            <field name="total_price"     readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Equipment">
+                             <field name="equipment_line_ids">
+                                 <list editable="bottom">
+                                    <field name="equipment_id"
+                                        domain="[('facility_id', '=', parent.facility_id)]"/>
+                                        <field name="quantity"/>
+                                        <field name="rental_price" readonly="1"/>
+                                        <field name="subtotal"     readonly="1"/>
+                                 </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sports_booking_calendar" model="ir.ui.view">
+        <field name="name">sports.facility.booking.calendar</field>
+        <field name="model">sports.facility.booking</field>
+        <field name="arch" type="xml">
+            <calendar string="Reservations Calendar"
+                      date_start="start_time"
+                      date_stop="end_time"
+                      color="court_id"
+                      mode="week">
+                <field name="partner_id"/>
+                <field name="court_id"/>
+                <field name="coach_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_sports_booking" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">sports.facility.booking</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+
+</odoo> -->

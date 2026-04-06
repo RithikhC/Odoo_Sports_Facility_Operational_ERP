@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sports_type_user,sports.type user,model_sports_type,base.group_user,1,0,0,0
+access_sports_type_manager,sports.type manager,model_sports_type,base.group_system,1,1,1,1
+access_sports_facility_user,sports.facility user,model_sports_facility,base.group_user,1,0,0,0
+access_sports_facility_manager,sports.facility manager,model_sports_facility,base.group_system,1,1,1,1
+access_sports_amenity_user,sports.amenity user,model_sports_amenity,base.group_user,1,0,0,0
+access_sports_amenity_manager,sports.amenity manager,model_sports_amenity,base.group_system,1,1,1,1
+access_sports_facility_court_user,sports.facility.court user,model_sports_facility_court,base.group_user,1,0,0,0
+access_sports_facility_court_manager,sports.facility.court manager,model_sports_facility_court,base.group_system,1,1,1,1
+access_sports_equipment_user,sports.equipment user,model_sports_equipment,base.group_user,1,0,0,0
+access_sports_equipment_manager,sports.equipment manager,model_sports_equipment,base.group_system,1,1,1,1
+access_sports_equipment_line_user,sports.equipment.line user,model_sports_equipment_line,base.group_user,1,1,1,1
+access_sports_equipment_line_manager,sports.equipment.line manager,model_sports_equipment_line,base.group_system,1,1,1,1
+access_sports_coach_user,sports.coach user,model_sports_coach,base.group_user,1,0,0,0
+access_sports_coach_manager,sports.coach manager,model_sports_coach,base.group_system,1,1,1,1
+access_sports_locker_user,sports.locker user,model_sports_locker,base.group_user,1,0,0,0
+access_sports_locker_manager,sports.locker manager,model_sports_locker,base.group_system,1,1,1,1
+access_sports_pricing_rule_user,sports.pricing.rule user,model_sports_pricing_rule,base.group_user,1,0,0,0
+access_sports_pricing_rule_manager,sports.pricing.rule manager,model_sports_pricing_rule,base.group_system,1,1,1,1
+access_sports_facility_booking_user,sports.facility.booking user,model_sports_facility_booking,base.group_user,1,1,1,0
+access_sports_facility_booking_manager,sports.facility.booking manager,model_sports_facility_booking,base.group_system,1,1,1,1
+access_sports_membership_user,sports.membership user,model_sports_membership,base.group_user,1,0,0,0
+access_sports_membership_manager,sports.membership manager,model_sports_membership,base.group_system,1,1,1,1
+access_sports_membership_payment_user,sports.membership.payment user,model_sports_membership_payment,base.group_user,1,1,1,0
+access_sports_membership_payment_manager,sports.membership.payment manager,model_sports_membership_payment,base.group_system,1,1,1,1
