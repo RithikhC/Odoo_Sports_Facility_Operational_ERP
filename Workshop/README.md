@@ -133,8 +133,8 @@ Bookings are guided step by step:
 ### Requirements
 
 - Odoo 19
-- Python 3.10+
-- PostgreSQL 14+
+- Python 3.11+
+- PostgreSQL 18+
 - Git
 
 ---
@@ -400,4 +400,4 @@ sports/
 
 ---
 
-*Built for the TOdoo Buildathon 2026*
+
