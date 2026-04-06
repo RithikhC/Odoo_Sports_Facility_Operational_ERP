@@ -337,16 +337,33 @@ http://localhost:8069
 
 ---
 
-## Technical Highlights
+## 🛠️ Technical Architecture & Core Mechanics
 
-- **`@api.depends` compute chains** — total price recalculates across court rate, coach fee, equipment subtotals, pricing multiplier, and membership discount in a single compute method
-- **`@api.constrains`** — overlap detection, coach double-booking, equipment stock validation across concurrent bookings, maintenance threshold enforcement, membership expiry check, sport-facility-court matching validation
-- **`@api.onchange`** — cascading field resets when sport, facility, or court changes to prevent mismatched selections reaching the database
-- **`models.Constraint`** — database-level CHECK constraints on prices, stock quantities, and pricing multipliers
-- **`ir.sequence`** — auto-generated booking references in `BK/YYYY/00001` format
-- **`ir.cron`** — scheduled actions for automatic locker expiry release and membership expiry marking
-- **`_inherit = 'res.partner'`** — extends the native Odoo contact model with membership plan, expiry date, and discount fields without modifying core code
-- **Domain filters on views** — all dropdowns in the booking form are dynamically filtered based on upstream selections so users can never make a structurally invalid booking
+The backend of TOdooSports is engineered for high-volume, multi-facility operations. Every feature is designed to automate administration, protect inventory, and eliminate human error at the database level.
+
+### 1. Relational Database Design
+* **Scalable Hierarchies (One2many & Many2one):** The system relies on a strict parent-child data structure. The `sports.facility` model acts as the master hub, linking directly to its specific courts, locally assigned coaches, and physical equipment inventory. This ensures data remains isolated and accurate per location.
+* **Global Tagging (Many2many):** Implemented for `sports.amenity` (e.g., VIP Lounges, Showers, Floodlights) using `widget="many2many_tags"`. This allows facility managers to assign and display multiple amenities to specific courts with a clean, visual UI.
+
+### 2. Business Logic & Computations
+* **Dynamic Pricing Engine (`@api.depends`):** The checkout calculation goes far beyond simple addition. A single, complex compute method recalculates the total price in real-time by chaining variables: *(Court Base Rate × Dynamic Surge Multiplier) + Coach Fees + Equipment Subtotals − Active Membership Discounts*. 
+* **Cascading Data Funnels (`@api.onchange`):** To prevent user error, the booking form acts as a strict funnel. If an admin changes the selected 'Sport' halfway through a booking, the system automatically wipes the previously selected Facility, Court, and Equipment fields, ensuring mismatched data can never be submitted to the database.
+
+### 3. Data Integrity & Operational Security
+* **Absolute Overlap Prevention (`@api.constrains`):** The backbone of the system's security. Database-level ORM constraints ensure physical realities are respected:
+  * **Court Logic:** Completely blocks any new reservation that overlaps with a confirmed booking's time slot.
+  * **Staff Logic:** Prevents coaches from being double-booked across different courts simultaneously.
+  * **Inventory Logic:** Calculates real-time equipment availability and blocks any transaction that exceeds physical stock limits.
+
+### 4. Advanced UI & Visual Management
+* **Workflow Automation (States & Statusbars):** Bookings, Lockers, and Courts utilize `state` Selection fields paired with `widget="statusbar"`. This gives staff a clear, visual pipeline (e.g., Draft ➔ Confirmed ➔ Done) and restricts certain actions based on the current state.
+* **Visual Data Cues:** Tree view decorators (`decoration-success` for paid/available, `decoration-danger` for unpaid/maintenance) provide instant visual feedback to receptionists handling fast-paced walk-ins.
+* **Contextual Domain Filters:** XML domain filters are heavily utilized to create a foolproof UI. Dropdowns dynamically restrict choices based on upstream selections—for example, the 'Equipment' dropdown will *only* display rackets that physically exist at the facility where the court is currently being booked.
+
+### 5. Advanced Framework Integrations
+* **CRM Inheritance (`_inherit`):** Instead of building a custom customer database from scratch, the app safely extends Odoo's native `res.partner` (Contacts) model. It injects custom fields like Membership Plans, Expiry Dates, and Active Discounts directly into the core CRM without breaking native Odoo functionality.
+* **Automated Housekeeping (`ir.cron`):** Background server scripts run nightly to handle passive administration. They automatically audit the database to release expired locker rentals back into the available pool and flag outdated memberships, requiring zero manual input from staff.
+* **Professional Sequencing (`ir.sequence`):** Replaces default database IDs with auto-generated, professional alphanumeric references (e.g., `BK/2026/00001`), essential for clean B2B invoicing and customer receipts.
 
 ---
 
