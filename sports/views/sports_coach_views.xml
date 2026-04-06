@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_coach_list" model="ir.ui.view">
+        <field name="name">sports.coach.list</field>
+        <field name="model">sports.coach</field>
+        <field name="arch" type="xml">
+            <list string="Coaches">
+                <field name="name"/>
+                <field name="sport_type_id"/>
+                <field name="hourly_fee"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_coach_form" model="ir.ui.view">
+        <field name="name">sports.coach.form</field>
+        <field name="model">sports.coach</field>
+        <field name="arch" type="xml">
+            <form string="Coach">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Coach Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="sport_type_id"/>
+                        <field name="hourly_fee"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sports_coach" model="ir.actions.act_window">
+        <field name="name">Coaches</field>
+        <field name="res_model">sports.coach</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sports_court_list" model="ir.ui.view">
+        <field name="name">sports.facility.court.list</field>
+        <field name="model">sports.facility.court</field>
+        <field name="arch" type="xml">
+            <list string="Courts"
+                  decoration-success="state == 'available'"
+                  decoration-danger="state == 'maintenance'">
+                <field name="name"/>
+                <field name="facility_id"/>
+                <field name="sport_type_id"/>
+                <field name="surface_type"/>
+                <field name="hourly_rate"/>
+                <field name="accumulated_hours"/>
+                <field name="maintenance_threshold"/>
+                <field name="amenity_ids" widget="many2many_tags"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_court_form" model="ir.ui.view">
+        <field name="name">sports.facility.court.form</field>
+        <field name="model">sports.facility.court</field>
+        <field name="arch" type="xml">
+            <form string="Court">
+                <header>
+                    <button name="action_reset_maintenance"
+                            string="Mark as Repaired (Reset Hours)"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'maintenance'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="available,maintenance"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Court Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="facility_id"/>
+                            <field name="sport_type_id"/>
+                            <field name="surface_type"/>
+                            <field name="hourly_rate"/>
+                        </group>
+                        <group string="Maintenance Tracking">
+                            <field name="maintenance_threshold"/>
+                            <field name="accumulated_hours"/>
+                        </group>
+                    </group>
+                    <group string="Amenities">
+                        <field name="amenity_ids" widget="many2many_tags" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sports_facility_court_action" model="ir.actions.act_window">
+        <field name="name">Courts</field>
+        <field name="res_model">sports.facility.court</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

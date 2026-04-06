@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cron_release_expired_lockers" model="ir.cron">
+        <field name="name">ArenaOS: Release Expired Lockers</field>
+        <field name="model_id" ref="model_sports_locker"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_release_expired_lockers()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="cron_expire_memberships" model="ir.cron">
+        <field name="name">ArenaOS: Expire Memberships</field>
+        <field name="model_id" ref="model_sports_membership_payment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_expire_memberships()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="cron_auto_close_bookings" model="ir.cron">
+        <field name="name">ArenaOS: Auto Close Bookings</field>
+        <field name="model_id" ref="model_sports_facility_booking"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_close_bookings()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>
