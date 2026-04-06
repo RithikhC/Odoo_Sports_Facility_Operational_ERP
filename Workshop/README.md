@@ -1,4 +1,4 @@
-# TOdooSports 🏟️
+# TOdooSports 
 
 A fully integrated sports facility management ERP built on **Odoo 19**.  
 Designed for multi-sport facility owners who need to manage courts, bookings, coaches, equipment, lockers, memberships, and dynamic pricing from a single backend system.
